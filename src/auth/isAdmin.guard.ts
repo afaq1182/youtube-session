@@ -3,7 +3,7 @@ import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from
 
 @Injectable()
 export class IsAdmin implements CanActivate
-{
+{ 
     async canActivate(context: ExecutionContext)
     {
         const request = context.switchToHttp().getRequest();

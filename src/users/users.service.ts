@@ -8,7 +8,7 @@ username: string;
 isAdmin: boolean,
 password: string;
 }
-
+ 
 @Injectable()
 export class UsersService 
 {
