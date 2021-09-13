@@ -18,10 +18,10 @@ async function bootstrap() {
         intervalMs: 900000 //ms = 15min
       }
     }),
-    secret: 'afaq',
+    secret: 'afaq', 
     resave: false,
     saveUninitialized: false,
-    cookie: {maxAge: 360000},
+    cookie: {maxAge: 360000}
     })
   );
 
