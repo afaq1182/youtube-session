@@ -12,7 +12,7 @@ export class AppController {
   @Post('/login')
   @UseGuards(LocalAuthGuard)
   async login(@Request() req){
-    return {message: 'Logged In..!!!'};
+    return {message: `Logged In..!!! Welcome Home ${req.user.name.toUpperCase()}...!!!!`};
   }
 
   @Get('protected')
@@ -24,12 +24,13 @@ export class AppController {
 
   @Get('/logout')
   @UseGuards(new AuthenticatedGuard)
-  async logout(@Req() req, @Session() sess, @Res() res)
+  async logout(@Req() req, @Res() res)
   {
     req.session.destroy(function (err) {
+      if(err) throw err;
       res.send('USER LOGGED OUT...!!!') //Inside a callback… bulletproof!
      });
-    //res.clearCookie('connect.sid');
+    res.clearCookie('connect.sid');
     return req.session;
   }
 }
