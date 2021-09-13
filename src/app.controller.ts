@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Req, Request, Res, Session, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
 import { AuthenticatedGuard } from './auth/authenticated.guard';
 import { IsAdmin } from './auth/isAdmin.guard';
@@ -20,5 +20,16 @@ export class AppController {
   @UseGuards(new IsAdmin)
   getHello(@Request() req): string {
     return `Hey ${req.user.name.toUpperCase()}...!!!`
+  }
+
+  @Get('/logout')
+  @UseGuards(new AuthenticatedGuard)
+  async logout(@Req() req, @Session() sess, @Res() res)
+  {
+    req.session.destroy(function (err) {
+      res.send('USER LOGGED OUT...!!!') //Inside a callback… bulletproof!
+     });
+    //res.clearCookie('connect.sid');
+    return req.session;
   }
 }
