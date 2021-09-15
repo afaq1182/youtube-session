@@ -1,0 +1,3 @@
+Revise Dish Entity
+Check User Repository and uncomment the password checking logic to implememt correct authentication
+Do remember to add One to Many relation in Order Entity while giving it an Array of Dishes
