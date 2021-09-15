@@ -9,6 +9,7 @@ const SqliteStore = require('better-sqlite3-session-store')(session)
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const db = new sqlite("sessions.db", { });//verbose: console.log });
+  console.log(__dirname + '/../**/*.entity{.js,.ts}')
   app.use(
     session({
     store: new SqliteStore({
@@ -21,7 +22,7 @@ async function bootstrap() {
     secret: 'afaq', 
     resave: false,
     saveUninitialized: false,
-    cookie: {maxAge: 360000}
+    cookie: {maxAge: 3600000}
     })
   );
   app.use(passport.initialize());

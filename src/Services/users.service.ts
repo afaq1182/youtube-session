@@ -5,8 +5,9 @@ export type User =
 id: number;
 name: string;
 username: string;
-isAdmin: boolean,
 password: string;
+isAdmin: boolean;
+isStaff: boolean;
 }
  
 @Injectable()
@@ -18,15 +19,17 @@ export class UsersService
             id: 1,
             name: 'afaq',
             username: 'alsoafaq',
+            password: 'afaqpassword',
             isAdmin: true,
-            password: 'afaqpassword'
+            isStaff: false
         },
         {
             id: 2,
             name: 'tabish',
             username: 'alsotabish',
+            password: 'tabishpassword',
             isAdmin: false,
-            password: 'tabishpassword'
+            isStaff: true
         }
     ];
 

@@ -1,8 +1,9 @@
 import { Controller, Get, Post, Req, Request, Res, Session, UseGuards } from '@nestjs/common';
-import { AppService } from './app.service';
-import { AuthenticatedGuard } from './auth/authenticated.guard';
-import { IsAdmin } from './auth/isAdmin.guard';
-import { LocalAuthGuard } from './auth/local-auth.guard';
+import { AppService } from '../app.service';
+import { AuthenticatedGuard } from '../auth/authenticated.guard';
+import { IsAdmin } from '../auth/isAdmin.guard';
+import { isStaff } from '../auth/isStaff.guard';
+import { LocalAuthGuard } from '../auth/local-auth.guard';
 
 @Controller()
 export class AppController {
@@ -17,7 +18,7 @@ export class AppController {
 
   @Get('protected')
   @UseGuards(new AuthenticatedGuard)
-  @UseGuards(new IsAdmin)
+  @UseGuards(new isStaff)
   getHello(@Request() req): string {
     return `Hey ${req.user.name.toUpperCase()}...!!!`
   }
