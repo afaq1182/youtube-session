@@ -13,7 +13,7 @@ export class UserRepository extends Repository<User>
         const result = await User.query(`SELECT * FROM user WHERE username="${username}"`)
        // const result = await User.findOne({where: {username}})
         //console.log(result.password+'  this password')
-        if(result)
+        if(result) 
         {
             // console.log('username matcheddd')
             // if(result.password === passwords)
