@@ -1,4 +1,5 @@
 import { Controller, UseGuards, Post, Body, Get, Param, UsePipes, ParseIntPipe, Delete } from '@nestjs/common';
+import { DishDTO } from 'src/DTO/Dish-DTO';
 import { AuthenticatedGuard } from '../auth/authenticated.guard';
 import { IsAdmin } from '../auth/isAdmin.guard';
 import { DishService } from '../Services/dish.service';

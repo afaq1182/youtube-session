@@ -9,7 +9,7 @@ import { UserRepository } from 'src/Repositories/User-Respository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [UsersService, PassportModule.register({ session: true }), TypeOrmModule.forFeature(UserRepository)],
+  imports: [UsersService, PassportModule.register({ session: true }), TypeOrmModule.forFeature([UserRepository])],
   providers: [AuthService, UsersService, LocalStrategy, SessionSerializer, UserRepository],
   controllers: [AuthController],
 })
