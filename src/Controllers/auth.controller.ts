@@ -40,7 +40,7 @@ export class AuthController
     {
         req.session.destroy(function(err)
         {
-            res.send('You are logged out now my boy..!!!!');
+            res.send('You are logged OUT..!!!!');
             res.clearCookie(this.cookie, { path: '/' });
             res.clearCookie('connect.sid');
         })

@@ -10,16 +10,16 @@ export class UserRepository extends Repository<User>
     {
         const {username, password} = userDTO;
        // console.log(userDTO)
-        const result = await User.query(`SELECT * FROM user WHERE username="${username}"`)
-       // const result = await User.findOne({where: {username}})
+        //const result = await User.query(`SELECT * FROM user WHERE username="${username}"`)
+        const result = await User.findOne({where: {username}})
         //console.log(result.password+'  this password')
         console.log('This is the Entered USERNAME : '+username);
         console.log('This is the Entered PASSWORD : '+password);
-        console.log(result[0].password);
+        console.log(result);
         if(result) 
         {
             console.log('username matcheddd')
-            if(result[0].password === password)
+            if(result.password === password)
             {
                // const {username,password, ...rest} = userDTO;
                 console.log('CAlled')
