@@ -1,14 +1,15 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './Controllers/app.controller';
 import { AppService } from './app.service';
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './modules/users.module';
+import { AuthModule } from './modules/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeormConfig } from './config/TypeOrm.config';
-import { DishModule } from './dish/dish.module';
+import { DishModule } from './modules/dish.module';
+import { OrderModule } from './modules/order.module';
 
 @Module({
-  imports: [UsersModule, AuthModule,DishModule, TypeOrmModule.forRoot(typeormConfig)],
+  imports: [UsersModule, AuthModule,DishModule, TypeOrmModule.forRoot(typeormConfig), OrderModule],
   controllers: [AppController],
   providers: [AppService],
 })
