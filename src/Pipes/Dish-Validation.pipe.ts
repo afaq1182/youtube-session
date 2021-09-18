@@ -12,6 +12,6 @@ export class DishNameValidationPipe implements PipeTransform
         }
         if(value.name.length>30) throw new BadRequestException('Name of Dish is too LONG...!!!');
         if(value.price>6000) throw new BadRequestException('Price is too High...!!!');
-        return value;
+        return value; 
     }
 }
