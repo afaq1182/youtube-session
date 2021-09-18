@@ -27,7 +27,7 @@ export class DishRepository extends Repository<Dish>
     }
     async GetDishByName(name: string)
     {
-        return await Dish.findOne({where: {name}});
+        return await Dish.findOne({where: {name}});   
     }
     async UpdateDish(dishDTO: DishDTO) 
     {
