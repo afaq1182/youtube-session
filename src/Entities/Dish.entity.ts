@@ -1,6 +1,7 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, Double, Unique } from "typeorm";
 
 @Entity()
+@Unique(['name'])
 export class Dish extends BaseEntity {
 
     @PrimaryGeneratedColumn()
@@ -12,6 +13,6 @@ export class Dish extends BaseEntity {
     @Column()
     price: number
 
-    @Column()
+    @Column({type: "double"})
     InventoryFactor: number
 }

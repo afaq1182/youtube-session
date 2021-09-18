@@ -27,7 +27,7 @@ export class UserRepository extends Repository<User>
             }
             //return result
         }
-        console.log(result[0].password)
+        //console.log(result.password)
         throw new UnauthorizedException('Wrong Credentials...!!!');
 
     }

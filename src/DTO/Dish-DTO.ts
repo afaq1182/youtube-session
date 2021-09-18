@@ -1,3 +1,4 @@
+import { ParseIntPipe, UsePipes } from "@nestjs/common";
 
 export class DishDTO {
     id: number;

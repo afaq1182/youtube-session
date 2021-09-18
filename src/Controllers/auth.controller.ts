@@ -20,9 +20,6 @@ export class AuthController
     @UseGuards(new LocalAuthGuard(UserDTO))
     async LogIn(@Body() userDTO: UserDTO, @Req() req)
     {
-        console.log(userDTO)
-        console.log(req.user.username)
-        console.log('Controller called')
         await this.authService.LogIn(userDTO);
         return 'LOGGGED IN '+req.user.username.toUpperCase()
     }
