@@ -12,13 +12,8 @@ export class OrderService {
         return await this.orderRepository.CreateOrder(orderDTO);
     }
 
-    async CheckOut(checkOutDTO: CheckOutDTO)
+    async GetAllOrders(orderDTO: OrderDTO)
     {
-        return await this.orderRepository.CheckOut(checkOutDTO);
-    }
-
-    async ViewPendingOrders()
-    {
-        return await this.orderRepository.ViewPendingOrders();
+        return await this.orderRepository.GetAllOrders(orderDTO);
     }
 }

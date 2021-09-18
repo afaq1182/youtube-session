@@ -2,7 +2,7 @@ import { OrderDTO } from "src/DTO/Order-DTO";
 import { Dish } from "src/Entities/Dish.entity";
 import { OrderDetails } from "src/Entities/Order-Detail.entity";
 import { Order } from "src/Entities/Order.entity";
-import { EntityRepository, Repository } from "typeorm";
+import { EntityRepository, LessThanOrEqual, MoreThanOrEqual, Repository } from "typeorm";
 import * as moment from 'moment';
 import { CheckOutDTO } from "src/DTO/Check-Out.DTO";
 @EntityRepository(Order)
@@ -10,44 +10,39 @@ export class OrderRepository extends Repository<Order>
 {
     async CreateOrder(orderDTO: OrderDTO)
     {
-        const {dishes} = orderDTO; const order = new Order(); var TotalPrice = 0; const arr = JSON.parse(dishes);
-        for(var i =0; arr[i]!=undefined; i++)
-        {
-            var result = await Dish.findOne(arr[i]);
-            if(result) TotalPrice = TotalPrice + result.price;
-            console.log(i)
-        }
+        const {dishes,Bill_Payed,discount} = orderDTO; const order = new Order(); var TotalPrice = 0;
+        const newDishes = await Dish.findByIds(dishes);
+        TotalPrice = newDishes.reduce((acc,item) => {
+        return acc + item.price; },0);
         order.Bill = TotalPrice;
         order.CreatedAt = moment().format('YYYY-MM-DD hh-mm-ss');
-        console.log(order.CreatedAt)
+        order.discount = discount;
+        order.Bill_Payed = TotalPrice;
+        order.CheckedOut = true;
         const savedorder = await order.save();
-        for(var i=0; arr[i]!=undefined; i++)
-        {
-            const orderdetail = new OrderDetails();
-            
-            orderdetail.dishid = arr[i];
-            orderdetail.OrderId = savedorder.id;
-            await orderdetail.save();
-        }
-        const response = {message: 'Order Created!', OrderDetails: savedorder}
+        dishes.forEach( async (acc) => {
+        const orderdetail = new OrderDetails();
+        console.log(acc);
+        orderdetail.OrderId = savedorder.id;
+        orderdetail.dishid = acc;
+        await orderdetail.save();
+        })
+        const response = {message: 'Order Created!', OrderDetails: savedorder, Balance: Bill_Payed-TotalPrice}
         return {response};
     }
 
-    async CheckOut(checkOutDTO: CheckOutDTO)
+    async GetAllOrders(orderDTO: OrderDTO)
     {
-        const {BillId, BillPayed, discount} = checkOutDTO;
-        const result = await Order.findOne(BillId);
-        result.CheckedOut = true;
-        result.CheckOutAt = moment().format('YYYY-MM-DD hh-mm-ss');
-        result.Bill_Payed = BillPayed;
-        result.discount = discount;
-        return result.save();
-    }
-
-    async ViewPendingOrders()
-    {
-        const result = await Order.findAndCount({where: {CheckedOut: false}});
-        const response = { OrdersCount: result[1], Orders: result[0]}
+        const {CreatedAt} = orderDTO;
+        var date;
+        if(!CreatedAt) date = moment().startOf('day').format('YYYY-MM-DD HH-mm-ss');
+        console.log(date)
+        const now = moment().format('YYYY-MM-DD hh-mm-ss');
+        //console.log(moment().startOf('day').format('YYYY-MM-DD hh-mm-ss'));
+        //const result = await Order.findAndCount({where: {CreatedAt: LessThanOrEqual("2021-09-19 00:00:00") } })
+        const result = await Order.createQueryBuilder('order').where({CreatedAt: LessThanOrEqual(`${now}`)}).andWhere({CreatedAt: MoreThanOrEqual(`${date}`)}).getManyAndCount()
+        console.log(result);
+        const response = {OrdersCount: result[1], Orders: result[0]};
         return response;
     }
 }

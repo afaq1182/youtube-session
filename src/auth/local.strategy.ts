@@ -13,7 +13,6 @@ export class LocalStrategy extends PassportStrategy(Strategy)
     {
         const userDTO = {username: username, password: password};
         const user = await this.authService.LogIn(userDTO);
-        console.log(user)
         if(!user) throw new UnauthorizedException('user not found...!!!');
         return user;
     }

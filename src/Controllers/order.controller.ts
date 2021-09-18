@@ -15,15 +15,9 @@ export class OrderController {
         return await this.orderService.CreateOrder(orderDTO);
     }
 
-    @Post('/checkout')
-    async CheckOut(@Body() checkOutDTO: CheckOutDTO)
+    @Post('/GetOrders')
+    async GetAllOrders(@Body() orderDTO: OrderDTO)
     {
-        return await this.orderService.CheckOut(checkOutDTO);
-    }
-
-    @Get('/getorders')
-    async ViewPendingOrders()
-    {
-        return await this.orderService.ViewPendingOrders();
+        return await this.orderService.GetAllOrders(orderDTO);
     }
 }

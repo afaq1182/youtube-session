@@ -7,7 +7,6 @@ export class IsAdmin implements CanActivate
     async canActivate(context: ExecutionContext)
     {
         const request = context.switchToHttp().getRequest();
-        console.log(request.user);
         if(request.user===undefined) 
         {
             throw new BadRequestException('You need to Log In first...!!!');

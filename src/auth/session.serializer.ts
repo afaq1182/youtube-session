@@ -6,7 +6,6 @@ export class SessionSerializer extends PassportSerializer
 {
     async serializeUser(user: any, done: (err: Error, user: any) => void): Promise<any>
     {
-        console.log(user)
         done(null, user)
     }
 
