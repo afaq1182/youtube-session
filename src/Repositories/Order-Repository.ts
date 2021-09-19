@@ -16,7 +16,6 @@ export class OrderRepository extends Repository<Order>
         return acc + item.price; },0);
         order.Bill = TotalPrice;
         order.CreatedAt = moment().format('YYYY-MM-DD hh-mm-ss');
-        order.discount = discount;
         order.Bill_Payed = TotalPrice;
         order.CheckedOut = true;
         const savedorder = await order.save();
@@ -28,6 +27,16 @@ export class OrderRepository extends Repository<Order>
         })
         const response = {message: 'Order Created!', OrderDetails: savedorder, Balance: Bill_Payed-TotalPrice}
         return {response};
+    }
+    async CheckOut(checkOutDTO: CheckOutDTO)
+    {
+        const {BillId, BillPayed} = checkOutDTO;
+        const order = await Order.createQueryBuilder('order').where({id: BillId}).getOneOrFail();
+        order.CheckedOut = true;
+        order.CheckedOutAt = moment().format('YYYY-MM-DD hh-mm-ss');
+        order.Bill_Payed = BillPayed;
+        order.discount = order.Bill - BillPayed;
+        return await order.save();
     }
 
     async GetAllOrders(orderDTO: OrderDTO)
@@ -42,4 +51,5 @@ export class OrderRepository extends Repository<Order>
         const response = {OrdersCount: result[1], Orders: result[0]};
         return response;
     }
+
 }

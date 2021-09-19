@@ -2,6 +2,8 @@ import { EntityRepository, Repository } from "typeorm";
 import { Dish } from "../Entities/Dish.entity";
 import { DishDTO } from "../DTO/Dish-DTO";
 import { NotFoundException } from "@nestjs/common";
+import { createReadStream, fsync } from "fs";
+import { join } from "path";
 
 
 @EntityRepository(Dish)
@@ -51,5 +53,13 @@ export class DishRepository extends Repository<Dish>
         {
             throw new NotFoundException('This Dish Does not Exist...!!!');
         }
+    }
+    
+    async GetImage(id: number)
+    {
+        const result =  await Dish.findOneOrFail({where: {id}});
+        return createReadStream(join(process.cwd()+result.ImagePath));
+        
+    
     }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthenticatedGuard } from 'src/auth/authenticated.guard';
 import { CheckOutDTO } from 'src/DTO/Check-Out.DTO';
 import { OrderDTO } from 'src/DTO/Order-DTO';
@@ -13,6 +13,13 @@ export class OrderController {
     async CreateOrder(@Body() orderDTO: OrderDTO)
     {
         return await this.orderService.CreateOrder(orderDTO);
+    }
+
+    @Post('/checkout')
+    @UsePipes(ValidationPipe)
+    async CheckOut(@Body() checkOutDTO: CheckOutDTO)
+    {
+        return await this.orderService.CheckOut(checkOutDTO);
     }
 
     @Post('/GetOrders')

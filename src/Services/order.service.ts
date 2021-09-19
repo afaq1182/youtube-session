@@ -12,6 +12,10 @@ export class OrderService {
         return await this.orderRepository.CreateOrder(orderDTO);
     }
 
+    async CheckOut(checkOutDTO: CheckOutDTO)
+    {
+        return await this.orderRepository.CheckOut(checkOutDTO);
+    }
     async GetAllOrders(orderDTO: OrderDTO)
     {
         return await this.orderRepository.GetAllOrders(orderDTO);

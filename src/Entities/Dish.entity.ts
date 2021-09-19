@@ -1,3 +1,4 @@
+import { type } from "os";
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, Double, Unique } from "typeorm";
 
 @Entity()
@@ -15,4 +16,7 @@ export class Dish extends BaseEntity {
 
     @Column({type: "double"})
     InventoryFactor: number
+
+    @Column()
+    ImagePath: string
 }

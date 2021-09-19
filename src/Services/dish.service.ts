@@ -21,4 +21,8 @@ export class DishService {
     async DeleteDish(id: number) {
         return await this.dishRepository.DeleteDish(id);
     }
+    async GetImage(id: number)
+    {
+        return await this.dishRepository.GetImage(id);
+    }
 }

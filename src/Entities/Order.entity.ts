@@ -1,11 +1,13 @@
-import { type } from "os";
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn, Timestamp } from "typeorm";
-import {Dish} from "./Dish.entity"
+
 @Entity()
 export class Order extends BaseEntity
 {
     @PrimaryGeneratedColumn()
     id: number
+
+    @Column({type: "integer"})
+    TableNumber: number
 
     @Column({type: "double"})
     Bill: number
@@ -21,4 +23,7 @@ export class Order extends BaseEntity
 
     @Column({type: "timestamp"})
     CreatedAt: string
+
+    @Column({type: "timestamp", default: "2021-01-01"})
+    CheckedOutAt: string
 }
