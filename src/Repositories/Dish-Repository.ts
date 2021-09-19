@@ -1,8 +1,7 @@
 import { EntityRepository, Repository } from "typeorm";
 import { Dish } from "../Entities/Dish.entity";
 import { DishDTO } from "../DTO/Dish-DTO";
-import { BadRequestException, NotFoundException } from "@nestjs/common";
-import { error } from "console";
+import { NotFoundException } from "@nestjs/common";
 
 
 @EntityRepository(Dish)
@@ -16,6 +15,7 @@ export class DishRepository extends Repository<Dish>
         dish.InventoryFactor = dishDTO.InventoryFactor;
         return await dish.save();
     }
+
     async ViewAllDishes() {
         const dishes = await Dish.findAndCount();
         const response = {TotalDishes: dishes[1], Dishes: dishes[0]}
@@ -29,6 +29,7 @@ export class DishRepository extends Repository<Dish>
     {
         return await Dish.findOne({where: {name}});   
     }
+
     async UpdateDish(dishDTO: DishDTO) 
     {
         console.log(dishDTO)
@@ -41,6 +42,7 @@ export class DishRepository extends Repository<Dish>
         dish.InventoryFactor = dishDTO.InventoryFactor;
         return await dish.save();
     }
+
     async DeleteDish(id: number) {
         try{
             return await Dish.delete(id);

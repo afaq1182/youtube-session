@@ -22,7 +22,6 @@ export class OrderRepository extends Repository<Order>
         const savedorder = await order.save();
         dishes.forEach( async (acc) => {
         const orderdetail = new OrderDetails();
-        console.log(acc);
         orderdetail.OrderId = savedorder.id;
         orderdetail.dishid = acc;
         await orderdetail.save();
@@ -38,8 +37,6 @@ export class OrderRepository extends Repository<Order>
         if(!CreatedAt) date = moment().startOf('day').format('YYYY-MM-DD HH-mm-ss');
         console.log(date)
         const now = moment().format('YYYY-MM-DD hh-mm-ss');
-        //console.log(moment().startOf('day').format('YYYY-MM-DD hh-mm-ss'));
-        //const result = await Order.findAndCount({where: {CreatedAt: LessThanOrEqual("2021-09-19 00:00:00") } })
         const result = await Order.createQueryBuilder('order').where({CreatedAt: LessThanOrEqual(`${now}`)}).andWhere({CreatedAt: MoreThanOrEqual(`${date}`)}).getManyAndCount()
         console.log(result);
         const response = {OrdersCount: result[1], Orders: result[0]};
