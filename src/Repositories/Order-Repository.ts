@@ -24,7 +24,7 @@ export class OrderRepository extends Repository<Order>
         const orderdetail = new OrderDetails();
         orderdetail.OrderId = savedorder.id;
         orderdetail.dishid = acc;
-        await orderdetail.save();
+        await orderdetail.save(); 
         })
         const response = {message: 'Order Created!', OrderDetails: savedorder, Balance: Bill_Payed-TotalPrice}
         return {response};
