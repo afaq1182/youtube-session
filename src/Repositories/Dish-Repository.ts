@@ -58,8 +58,7 @@ export class DishRepository extends Repository<Dish>
     async GetImage(id: number)
     {
         const result =  await Dish.findOneOrFail({where: {id}});
+        console.log(result);
         return createReadStream(join(process.cwd()+result.ImagePath));
-        
-    
     }
 }

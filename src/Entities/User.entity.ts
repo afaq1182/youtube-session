@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Order } from "./Order.entity";
 
 
 @Entity()
@@ -10,6 +11,9 @@ export class User extends BaseEntity
     @Column()
     username: string
 
+    @OneToOne(type => Order, order => order.id)
+    orders: Order[];
+
     @Column()
     password: string
 
@@ -18,4 +22,6 @@ export class User extends BaseEntity
 
     @Column({type: 'tinyint'})
     isStaff: boolean
+
+
 }

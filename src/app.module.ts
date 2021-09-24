@@ -7,9 +7,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeormConfig } from './config/TypeOrm.config';
 import { DishModule } from './modules/dish.module';
 import { OrderModule } from './modules/order.module';
+import { InventoryModule } from './modules/inventory.module';
+import { ExpenseModule } from './modules/expense.module';
 
 @Module({
-  imports: [UsersModule, AuthModule,DishModule, TypeOrmModule.forRoot(typeormConfig), OrderModule],
+  imports: [UsersModule, AuthModule,DishModule, TypeOrmModule.forRoot(typeormConfig), OrderModule, InventoryModule, ExpenseModule],
   controllers: [AppController],
   providers: [AppService],
 })

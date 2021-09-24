@@ -11,4 +11,10 @@ export class CheckOutDTO
 
     @IsNumberString()
     discount: number;
+
+    @IsNumber()
+    custom_charges: number;
+
+    @IsNumber()
+    service_charges: number;
 }

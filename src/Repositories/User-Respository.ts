@@ -9,8 +9,6 @@ export class UserRepository extends Repository<User>
     async LogIn(userDTO: UserDTO)
     {
         const {username, password} = userDTO;
-       // console.log(userDTO)
-        //const result = await User.query(`SELECT * FROM user WHERE username="${username}"`)
         const result = await User.findOne({where: {username}})
         if(result) 
         {
@@ -18,11 +16,8 @@ export class UserRepository extends Repository<User>
             {
                 return result;
             }
-            //return result
         }
-        //console.log(result.password)
         throw new UnauthorizedException('Wrong Credentials...!!!');
-
     }
     async createUser(userDTO: UserDTO)
     {

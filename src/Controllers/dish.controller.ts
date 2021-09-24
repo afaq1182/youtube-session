@@ -7,8 +7,7 @@ import { IsAdmin } from '../auth/isAdmin.guard';
 import { DishService } from '../Services/dish.service';
 
 @Controller('dish')
-@UseGuards(new AuthenticatedGuard)
-@UsePipes( DishNameValidationPipe)
+//@UseGuards(new AuthenticatedGuard)
 export class DishController {
     constructor(private dishService: DishService) { }
     @UseGuards(new IsAdmin)
@@ -49,7 +48,8 @@ export class DishController {
     @Get('/image/:id')
     async GetImage(@Res() res,@Param('id', ParseIntPipe) id: number)
     {
+        console.log('called')
         const file : any = await this.dishService.GetImage(id);
-        file.pipe(res);
+        return file.pipe(res);
     }
 }

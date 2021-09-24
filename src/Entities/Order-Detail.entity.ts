@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Order } from "./Order.entity";
 
 @Entity()
 export class OrderDetails extends BaseEntity
@@ -11,4 +12,7 @@ export class OrderDetails extends BaseEntity
 
     @Column()
     dishid: number;
+
+    @ManyToOne(type => Order, orders => orders.id, {onDelete: "CASCADE"})
+    orders: Order;
 }

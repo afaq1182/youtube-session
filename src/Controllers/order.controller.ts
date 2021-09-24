@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Patch, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthenticatedGuard } from 'src/auth/authenticated.guard';
 import { CheckOutDTO } from 'src/DTO/Check-Out.DTO';
 import { OrderDTO } from 'src/DTO/Order-DTO';
@@ -26,5 +26,18 @@ export class OrderController {
     async GetAllOrders(@Body() orderDTO: OrderDTO)
     {
         return await this.orderService.GetAllOrders(orderDTO);
+    }
+
+    @Patch('/update')
+    async Update(@Body() orderDTO: OrderDTO)
+    {
+        return await this.orderService.Update(orderDTO);
+    }
+
+    @Delete('/delete')
+    async DeleteOrder(@Body() orderDTO: OrderDTO)
+    {
+        console.log(orderDTO)
+        return await this.orderService.DeleteOrder(orderDTO);
     }
 }

@@ -20,4 +20,13 @@ export class OrderService {
     {
         return await this.orderRepository.GetAllOrders(orderDTO);
     }
+    async Update(orderDTO: OrderDTO)
+    {
+        return await this.orderRepository.Update(orderDTO);
+    }
+    async DeleteOrder(orderDTO: OrderDTO)
+    {
+        return await this.orderRepository.DeleteOrder(orderDTO);
+        
+    }
 }

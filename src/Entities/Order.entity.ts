@@ -1,4 +1,6 @@
-import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn, Timestamp } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
+import { OrderDetails } from "./Order-Detail.entity";
+import { User } from "./User.entity";
 
 @Entity()
 export class Order extends BaseEntity
@@ -15,8 +17,22 @@ export class Order extends BaseEntity
     @Column({type: "double"})
     Bill_Payed: number
 
+    @ManyToOne(type => User, user => user.id, {onDelete: "CASCADE"})
+    @JoinColumn()
+    user: User;
+
+    @OneToMany(type => OrderDetails, orderdetails => orderdetails.id, {onDelete: "CASCADE"})
+    @JoinColumn()
+    orderdetails: number;
+
     @Column()
     discount: number
+
+    @Column()
+    custom_charges: number
+
+    @Column()
+    service_charges: number
 
     @Column({type: 'boolean', default: false})
     CheckedOut: boolean
