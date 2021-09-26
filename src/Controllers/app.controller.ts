@@ -1,9 +1,9 @@
 import { Controller, Get, Post, Req, Request, Res, Session, UseGuards } from '@nestjs/common';
 import { AppService } from '../app.service';
-import { AuthenticatedGuard } from '../auth/authenticated.guard';
-import { IsAdmin } from '../auth/isAdmin.guard';
-import { isStaff } from '../auth/isStaff.guard';
-import { LocalAuthGuard } from '../auth/local-auth.guard';
+import { AuthenticatedGuard } from '../Guards/authenticated.guard';
+import { IsAdmin } from '../Guards/isAdmin.guard';
+import { isStaff } from '../Guards/isStaff.guard';
+import { LocalAuthGuard } from '../Guards/local-auth.guard';
 
 @Controller()
 export class AppController {

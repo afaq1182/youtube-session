@@ -2,8 +2,8 @@ import { Controller, UseGuards, Post, Body, Get, Param, UsePipes, ParseIntPipe, 
 import { DishDTO } from 'src/DTO/Dish-DTO';
 import { DishNameValidationPipe } from 'src/Pipes/Dish-Validation.pipe';
 import { DishAlreadyExists } from 'src/Pipes/DishAlreadyExists.pipe';
-import { AuthenticatedGuard } from '../auth/authenticated.guard';
-import { IsAdmin } from '../auth/isAdmin.guard';
+import { AuthenticatedGuard } from '../Guards/authenticated.guard';
+import { IsAdmin } from '../Guards/isAdmin.guard';
 import { DishService } from '../Services/dish.service';
 
 @Controller('dish')

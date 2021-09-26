@@ -6,4 +6,5 @@ export class ExpenseDTO
     name: string;
     category: string;
     amount: Double;
+    categoryid: number;
 }

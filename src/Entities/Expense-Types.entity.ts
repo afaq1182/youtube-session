@@ -1,4 +1,6 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { type } from "os";
+import { BaseEntity, Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Expense } from "./Expense.entity";
 
 @Entity()
 export class ExpenseType extends BaseEntity
@@ -8,4 +10,8 @@ export class ExpenseType extends BaseEntity
 
     @Column()
     name: string;
+
+    @OneToMany(type => Expense, expense => expense.id, {onDelete: "CASCADE"})
+    @JoinColumn()
+    expense: number;
 }

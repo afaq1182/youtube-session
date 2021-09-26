@@ -1,6 +1,6 @@
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import { OrderDetails } from "./Order-Detail.entity";
-import { User } from "./User.entity";
+import { Users } from "./User.entity";
 
 @Entity()
 export class Order extends BaseEntity
@@ -17,9 +17,9 @@ export class Order extends BaseEntity
     @Column({type: "double"})
     Bill_Payed: number
 
-    @ManyToOne(type => User, user => user.id, {onDelete: "CASCADE"})
+    @ManyToOne(type => Users, user => user.id, {onDelete: "CASCADE"})
     @JoinColumn()
-    user: User;
+    user: Users;
 
     @OneToMany(type => OrderDetails, orderdetails => orderdetails.id, {onDelete: "CASCADE"})
     @JoinColumn()

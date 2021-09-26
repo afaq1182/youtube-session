@@ -1,4 +1,6 @@
-import { BaseEntity, Column, Double, Entity, PrimaryGeneratedColumn } from "typeorm";
+import * as moment from "moment";
+import { BaseEntity, Column, Double, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { ExpenseType } from "./Expense-Types.entity";
 
 @Entity()
 export class Expense extends BaseEntity
@@ -9,12 +11,15 @@ export class Expense extends BaseEntity
     @Column()
     name: string;
 
-    @Column()
-    category: string;
-
     @Column({type: "double"})
     amount: Double;
 
-    @Column({type: "timestamp"})
+    @Column({type: "timestamp", default: moment().format('YYYY-MM-DD hh-mm-ss')})
     CreatedAt: string;
+
+    @Column()
+    type: string; 
+
+    @ManyToOne(type => ExpenseType, category => category.id, {onDelete: 'CASCADE'})
+    category: number;
 }

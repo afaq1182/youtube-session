@@ -1,15 +1,15 @@
 import { UnauthorizedException } from "@nestjs/common";
 import { UserDTO } from "src/DTO/User-DTO";
-import { User } from "src/Entities/User.entity";
+import { Users } from "src/Entities/User.entity";
 import { EntityRepository, Repository } from "typeorm";
 
-@EntityRepository(User)
-export class UserRepository extends Repository<User>
+@EntityRepository(Users)
+export class UserRepository extends Repository<Users>
 {
     async LogIn(userDTO: UserDTO)
     {
         const {username, password} = userDTO;
-        const result = await User.findOne({where: {username}})
+        const result = await Users.findOne({where: {username}})
         if(result) 
         {
             if(result.password === password)
@@ -22,7 +22,7 @@ export class UserRepository extends Repository<User>
     async createUser(userDTO: UserDTO)
     {
         const {username,password} = userDTO;
-        const user = new User;
+        const user = new Users();
         user.username = username;
         user.password = password;
         return await user.save();

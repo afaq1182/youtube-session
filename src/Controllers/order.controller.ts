@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Patch, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
-import { AuthenticatedGuard } from 'src/auth/authenticated.guard';
+import { AuthenticatedGuard } from 'src/Guards/authenticated.guard';
 import { CheckOutDTO } from 'src/DTO/Check-Out.DTO';
 import { OrderDTO } from 'src/DTO/Order-DTO';
 import { OrderService } from 'src/Services/order.service';

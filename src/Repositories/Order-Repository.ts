@@ -5,8 +5,7 @@ import { Order } from "src/Entities/Order.entity";
 import { EntityRepository, LessThanOrEqual, MoreThanOrEqual, Repository } from "typeorm";
 import * as moment from 'moment';
 import { CheckOutDTO } from "src/DTO/Check-Out.DTO";
-import { User } from "src/Entities/User.entity";
-import { use } from "passport";
+import { Users } from "src/Entities/User.entity";
 @EntityRepository(Order)
 export class OrderRepository extends Repository<Order>
 {
@@ -20,7 +19,7 @@ export class OrderRepository extends Repository<Order>
         order.CreatedAt = moment().format('YYYY-MM-DD hh-mm-ss');
         order.CheckedOut = false;
         order.TableNumber = TableNumber;
-        const user = new User();
+        const user = new Users();
         user.id = userid;
         // user.username = 'afaq';
         // user.password = 'afaqpassword';
