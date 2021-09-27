@@ -20,6 +20,9 @@ export class Expense extends BaseEntity
     @Column()
     type: string; 
 
+    @Column({type: "timestamp", default: '2021-01-01'})
+    UpdatedAt: string;
+
     @ManyToOne(type => ExpenseType, category => category.id, {onDelete: 'CASCADE'})
     category: number;
 }

@@ -14,8 +14,16 @@ export class ExpenseService {
     {
         return await this.expenseRepository.ViewExpense(id);
     } 
-    async ViewAllExpenses(date: string)
+    async ViewAllExpenses(expenseDTO: ExpenseDTO)
     {
-        return await this.expenseRepository.ViewAllExpenses(date);
+        return await this.expenseRepository.ViewAllExpenses(expenseDTO);
+    }
+    async UpdateExpense(expenseDTO: ExpenseDTO)
+    {
+        return await this.expenseRepository.UpdateExpense(expenseDTO);
+    }
+    async DeleteExpense(id: number)
+    {
+        return await this.expenseRepository.DeleteExpense(id);
     }
 }

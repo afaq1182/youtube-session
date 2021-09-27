@@ -16,8 +16,6 @@ export class ExpenseRepository extends Repository<Expense>
         expense.type = category;
         expense.category = categoryid;
         expense.amount = amount;
-        //expense.CreatedAt = moment().format('YYYY-MM-DD hh-mm-ss');
-        //console.log(expense)
         return await expense.save();
     }
 
@@ -26,23 +24,33 @@ export class ExpenseRepository extends Repository<Expense>
         return await Expense.findOneOrFail(id);
     }
 
-    async ViewAllExpenses(date: string)
+    async ViewAllExpenses(expenseDTO: ExpenseDTO)
     {
-        if(!date) date = moment().startOf("day").format('YYYY-MM-DD hh-mm-ss');
+        var {date} = expenseDTO;
         console.log(date)
+        if(!date) date = JSON.parse(moment().startOf("day").format('YYYY-MM-DD hh-mm-ss'));
+        console.log(date);
         const result = await Expense.createQueryBuilder('Expense').where({CreatedAt: MoreThanOrEqual(date)}).getManyAndCount();
-        const response = {ExpenseCount: result[1], Expenses: result[0]}
+        const response = {ExpenseCount: result[1], Expenses: result[0]};
         return response;
     }
 
-    async UpdateExpense()
+    async UpdateExpense(expenseDTO: ExpenseDTO)
     {
-
+        const {id, name, categoryid, amount} = expenseDTO;
+        const update = moment().format('YYYY-MM-DD hh-mm-ss');
+        const expense = await Expense.findOneOrFail(id);
+        expense.name = name;
+        expense.category = categoryid;
+        expense.UpdatedAt = update;
+        expense.amount = amount;
+        return await expense.save(); 
     }
 
-    async DeleteExpense()
+    async DeleteExpense(id: number)
     {
-
+        const expense = await Expense.findOneOrFail(id);
+        return await expense.remove();
     }
 
     async FindExpenseType(expensetype: string)

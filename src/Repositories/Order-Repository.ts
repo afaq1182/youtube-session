@@ -21,10 +21,6 @@ export class OrderRepository extends Repository<Order>
         order.TableNumber = TableNumber;
         const user = new Users();
         user.id = userid;
-        // user.username = 'afaq';
-        // user.password = 'afaqpassword';
-        // user.isAdmin = true;
-        // user.isStaff = false;
         order.user = user;
         const savedorder = await order.save();
         dishes.forEach( async (acc) => {

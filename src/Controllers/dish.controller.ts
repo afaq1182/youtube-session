@@ -7,10 +7,11 @@ import { IsAdmin } from '../Guards/isAdmin.guard';
 import { DishService } from '../Services/dish.service';
 
 @Controller('dish')
-//@UseGuards(new AuthenticatedGuard)
+@UseGuards(new AuthenticatedGuard())
 export class DishController {
     constructor(private dishService: DishService) { }
-    @UseGuards(new IsAdmin)
+
+    @UseGuards(new IsAdmin())
     @Post('/createdish')
     @UsePipes(DishAlreadyExists)
     async CreateDish(@Body() dishDTO: DishDTO) 
@@ -31,7 +32,7 @@ export class DishController {
     }
 
     @Patch('/UpdateDish')
-    @UseGuards(new IsAdmin)
+    @UseGuards(new IsAdmin())
     async UpdateDish(@Body() dishDTO: DishDTO) 
     {
         console.log(dishDTO)
@@ -39,7 +40,7 @@ export class DishController {
     }
 
     @Delete('/:id')
-    @UseGuards(new IsAdmin)
+    @UseGuards(new IsAdmin())
     async DeleteDish(@Param('id', ParseIntPipe) id: number) 
     {
         return await this.dishService.DeleteDish(id);
@@ -48,7 +49,6 @@ export class DishController {
     @Get('/image/:id')
     async GetImage(@Res() res,@Param('id', ParseIntPipe) id: number)
     {
-        console.log('called')
         const file : any = await this.dishService.GetImage(id);
         return file.pipe(res);
     }
