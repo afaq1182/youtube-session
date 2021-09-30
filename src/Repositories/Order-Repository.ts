@@ -6,17 +6,22 @@ import { EntityRepository, LessThanOrEqual, MoreThanOrEqual, Repository } from "
 import * as moment from 'moment';
 import { CheckOutDTO } from "src/DTO/Check-Out.DTO";
 import { Users } from "src/Entities/User.entity";
+import { InventoryRepository } from "./Inventory-Repository";
+import { Inventory } from "src/Entities/Inventory.entity";
+
 @EntityRepository(Order)
 export class OrderRepository extends Repository<Order>
 {
+    constructor(private inventoryRepository: InventoryRepository ){super()}
     async CreateOrder(orderDTO: OrderDTO)
     {
         const {dishes,Bill_Payed,TableNumber, userid} = orderDTO; const order = new Order(); var TotalPrice = 0;
-        const newDishes = await Dish.findByIds(dishes);
-        TotalPrice = newDishes.reduce((acc,item) => {
+        const Dishes = await Dish.findByIds(dishes);
+        await this.inventoryRepository.UpdateInventoryByDishes(Dishes);
+        TotalPrice = Dishes.reduce((acc,item) => {
         return acc + item.price; },0);
         order.Bill = TotalPrice;
-        order.CreatedAt = moment().format('YYYY-MM-DD hh-mm-ss');
+        order.CreatedAt = await this.Getcurrenttime();
         order.CheckedOut = false;
         order.TableNumber = TableNumber;
         const user = new Users();
@@ -95,4 +100,5 @@ export class OrderRepository extends Repository<Order>
     {
         return moment().format('YYYY-MM-DD hh-mm-ss')
     }
+
 }

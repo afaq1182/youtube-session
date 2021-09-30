@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Patch, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Patch, Post, Req, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthenticatedGuard } from 'src/Guards/authenticated.guard';
 import { CheckOutDTO } from 'src/DTO/Check-Out.DTO';
 import { OrderDTO } from 'src/DTO/Order-DTO';
@@ -10,8 +10,9 @@ export class OrderController {
     constructor(private orderService: OrderService){}
 
     @Post('/createorder')
-    async CreateOrder(@Body() orderDTO: OrderDTO)
+    async CreateOrder(@Body() orderDTO: OrderDTO, @Req() req)
     {
+        orderDTO.userid = req.user.id;
         return await this.orderService.CreateOrder(orderDTO);
     }
 

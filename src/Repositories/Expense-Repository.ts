@@ -21,7 +21,7 @@ export class ExpenseRepository extends Repository<Expense>
 
     async ViewExpense(id: number)
     {
-        return await Expense.findOneOrFail(id);
+        return await this.FindExpenseEntity(id);
     }
 
     async ViewAllExpenses(expenseDTO: ExpenseDTO)
@@ -38,19 +38,30 @@ export class ExpenseRepository extends Repository<Expense>
     async UpdateExpense(expenseDTO: ExpenseDTO)
     {
         const {id, name, categoryid, amount} = expenseDTO;
-        const update = moment().format('YYYY-MM-DD hh-mm-ss');
-        const expense = await Expense.findOneOrFail(id);
+        const expense = await this.FindExpenseEntity(id);
         expense.name = name;
         expense.category = categoryid;
-        expense.UpdatedAt = update;
+        expense.UpdatedAt = moment().format('YYYY-MM-DD hh-mm-ss');
         expense.amount = amount;
         return await expense.save(); 
     }
 
     async DeleteExpense(id: number)
     {
-        const expense = await Expense.findOneOrFail(id);
+        const expense = await this.FindExpenseEntity(id);
         return await expense.remove();
+    }
+
+    async FindExpenseEntity(id: number)
+    {
+        try
+        {
+            return await Expense.findOneOrFail(id);
+        }
+        catch(err)
+        {
+            throw new NotFoundException('Requested Expense NOT FOUND!!!')
+        }
     }
 
     async FindExpenseType(expensetype: string)
