@@ -9,6 +9,8 @@ export class OrderDTO
 
     userid: number;
 
+    dishestoremove: [number];
+
     @IsNumber()
     TableNumber: number;
 

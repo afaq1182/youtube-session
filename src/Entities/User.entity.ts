@@ -11,8 +11,8 @@ export class Users extends BaseEntity
     @Column()
     username: string
 
-    @OneToOne(type => Order, order => order.id)
-    orders: Order[];
+    @OneToOne(type => Order, orders => orders.id, {onDelete: "CASCADE"})
+    orders: Order;
 
     @Column()
     password: string

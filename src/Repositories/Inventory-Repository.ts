@@ -1,9 +1,8 @@
 import { NotFoundException } from "@nestjs/common";
-import * as moment from "moment";
 import { InventoryDTO } from "src/DTO/Inventory.DTO";
 import { Dish } from "src/Entities/Dish.entity";
 import { Inventory } from "src/Entities/Inventory.entity";
-import { Double, EntityRepository, Repository } from "typeorm";
+import { EntityRepository, Repository } from "typeorm";
 
 @EntityRepository(Inventory)
 export class InventoryRepository extends Repository<Inventory>
@@ -40,13 +39,25 @@ export class InventoryRepository extends Repository<Inventory>
         return await inventory.save();
     }
 
-    async UpdateInventoryByDishes(items: Dish[], )
+    async UpdateInventoryByDishes(items: Dish[] )
     {
         items.forEach( async (acc) => {
             const id = acc.InventoryItem;
             await Inventory.createQueryBuilder()
             .update(Inventory)
             .set({amount: () => `amount - ${acc.InventoryFactor}`})
+            .where("id = :id",{id})
+            .execute();
+        });
+    }
+
+    async RestoreInventoryByDishes(items: Dish[])
+    {
+        items.forEach( async (acc) => {
+            const id = acc.InventoryItem;
+            await Inventory.createQueryBuilder()
+            .update(Inventory)
+            .set({amount: () => `amount + ${acc.InventoryFactor}`})
             .where("id = :id",{id})
             .execute();
         });

@@ -19,7 +19,7 @@ export class Order extends BaseEntity
 
     @ManyToOne(type => Users, user => user.id, {onDelete: "CASCADE"})
     @JoinColumn()
-    user: Users;
+    user: Users
 
     @OneToMany(type => OrderDetails, orderdetails => orderdetails.id, {onDelete: "CASCADE"})
     @JoinColumn()

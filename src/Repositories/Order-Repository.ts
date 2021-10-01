@@ -7,15 +7,14 @@ import * as moment from 'moment';
 import { CheckOutDTO } from "src/DTO/Check-Out.DTO";
 import { Users } from "src/Entities/User.entity";
 import { InventoryRepository } from "./Inventory-Repository";
-import { Inventory } from "src/Entities/Inventory.entity";
 
 @EntityRepository(Order)
 export class OrderRepository extends Repository<Order>
 {
     constructor(private inventoryRepository: InventoryRepository ){super()}
     async CreateOrder(orderDTO: OrderDTO)
-    {
-        const {dishes,Bill_Payed,TableNumber, userid} = orderDTO; const order = new Order(); var TotalPrice = 0;
+    {   console.log(orderDTO)
+        const {dishes,TableNumber, userid} = orderDTO; const order = new Order(); var TotalPrice = 0;
         const Dishes = await Dish.findByIds(dishes);
         await this.inventoryRepository.UpdateInventoryByDishes(Dishes);
         TotalPrice = Dishes.reduce((acc,item) => {
@@ -28,14 +27,14 @@ export class OrderRepository extends Repository<Order>
         user.id = userid;
         order.user = user;
         const savedorder = await order.save();
-        dishes.forEach( async (acc) => {
+        Dishes.forEach( async (acc) => {
         const orderdetail = new OrderDetails();
         orderdetail.OrderId = savedorder.id;
-        orderdetail.dishid = acc;
+        orderdetail.dishid = acc.id;
         orderdetail.orders = savedorder;
         await orderdetail.save(); 
         })
-        const response = {message: 'Order Created!', OrderDetails: savedorder, Balance: Bill_Payed-TotalPrice}
+        const response = {message: 'Order Created!', OrderDetails: savedorder}
         return {response};
     }
     async CheckOut(checkOutDTO: CheckOutDTO)
@@ -48,8 +47,10 @@ export class OrderRepository extends Repository<Order>
         order.discount = order.Bill - BillPayed;
         order.custom_charges = custom_charges;
         order.service_charges = service_charges;
-        order.Bill = order.Bill + custom_charges+service_charges;
-        return await order.save();
+        order.Bill += custom_charges+service_charges;
+        await order.save();
+        const response = {OrderId: BillId, Bill: order.Bill, BillPayed: BillPayed, Discount: order.Bill-BillPayed};
+        return response;
     } 
 
     async GetAllOrders(orderDTO: OrderDTO)
@@ -69,21 +70,38 @@ export class OrderRepository extends Repository<Order>
 
     async Update(orderDTO: OrderDTO)
     {
-        const {id,dishes} = orderDTO;
-        const dishindb = await Dish.findByIds(dishes);
+        const {id,dishes, dishestoremove} = orderDTO;
         const order = await Order.findOneOrFail(id);
-        dishindb.forEach(async (acc,index)=> {
+        const Dishes = await Dish.findByIds(dishes);
+        if(dishestoremove.length>0) 
+        {
+            var DishesToRemove = await Dish.findByIds(dishestoremove);
+            await this.inventoryRepository.RestoreInventoryByDishes(DishesToRemove);
+            DishesToRemove.forEach( async (acc) => {
+            const checkdish = await OrderDetails.findOneOrFail(acc.id);
+            if(checkdish)
+            {
+            order.Bill -= acc.price;
+            await order.save();
+            }
+            })
+        }
+        if(dishes.length>0) {
+        await this.inventoryRepository.UpdateInventoryByDishes(Dishes);
+        Dishes.forEach(async (acc,index)=> {
         console.log(acc)
-        order.Bill = order.Bill + dishindb[index].price;
-        await order.save();
+        order.Bill += acc.price;
         })
+        await order.save();
         dishes.forEach(async (acc,index) => {
-        const orderdeatils = new OrderDetails();
+        var orderdeatils = new OrderDetails();
         orderdeatils.OrderId = order.id;
         orderdeatils.dishid = dishes[index];
+        orderdeatils.orders = order;
         console.log(index)
         await orderdeatils.save();
         });
+    }
         return "Order Updated...!!!!";
     }
 

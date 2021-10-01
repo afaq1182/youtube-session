@@ -24,7 +24,7 @@ export class Dish extends BaseEntity {
     @Column()
     InventoryItem: number
 
-    @ManyToOne(type => Inventory, inventory => inventory.id, {onDelete: 'SET NULL'})
+    @ManyToOne(type => Inventory, inventory => inventory.id, {onDelete: 'CASCADE'})
     @JoinColumn()
     inventory: number
 

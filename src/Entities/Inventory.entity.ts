@@ -19,6 +19,6 @@ export class Inventory extends BaseEntity
     @Column()
     unit: string
 
-    @OneToMany(type => Dish, whatever => whatever.id)
+    @OneToMany(type => Dish, dish => dish.id , {onDelete: 'CASCADE'})
     dish: Dish
 }
