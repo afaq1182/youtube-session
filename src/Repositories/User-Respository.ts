@@ -29,7 +29,7 @@ export class UserRepository extends Repository<Users>
         const {username,password} = userDTO;
         const user = new Users();
         user.username = username;
-        user.password = password;
+        user.password = await bcrypt.hash(password,10);
         return await user.save();
     }
 }
