@@ -7,7 +7,7 @@ export const typeormConfig : TypeOrmModuleOptions =
     port: 3306,
     username: 'ac2cgjx4ienev16t',
     password: 'q41uyhor36o4dh3r',
-    database: "wykr0dkczmu3lmmcz",
+    database: "wykr0dkczmu3lmmc",
     entities: [__dirname + '/../**/*.entity{.ts,.js}'],
     autoLoadEntities: true,
     retryAttempts: 3,
