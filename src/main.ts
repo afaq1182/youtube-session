@@ -8,6 +8,7 @@ const SqliteStore = require('better-sqlite3-session-store')(session)
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const port = process.env.PORT || 3000;
   const db = new sqlite("sessions.db", { });//verbose: console.log });
   app.use(
     session({
@@ -26,6 +27,6 @@ async function bootstrap() {
   );
   app.use(passport.initialize());
   app.use(passport.session());
-  await app.listen(3000);
+  await app.listen(port);
 }
 bootstrap();
