@@ -13,6 +13,9 @@ export class OrderDetails extends BaseEntity
     @Column()
     dishid: number;
 
+    @Column()
+    dishquantity: number;
+
     @ManyToOne(type => Order, orders => orders.id, {onDelete: "CASCADE"})
     orders: Order;
 }

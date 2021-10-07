@@ -39,25 +39,25 @@ export class InventoryRepository extends Repository<Inventory>
         return await inventory.save();
     }
 
-    async UpdateInventoryByDishes(items: Dish[] )
+    async UpdateInventoryByDishes(items: Dish[], dishes: [{id: number, quantity: number}] )
     {
-        items.forEach( async (acc) => {
+        items.forEach( async (acc, index) => {
             const id = acc.InventoryItem;
             await Inventory.createQueryBuilder()
             .update(Inventory)
-            .set({amount: () => `amount - ${acc.InventoryFactor}`})
+            .set({amount: () => `amount - ${acc.InventoryFactor * dishes[index].quantity}`})
             .where("id = :id",{id})
             .execute();
         });
     }
 
-    async RestoreInventoryByDishes(items: Dish[])
+    async RestoreInventoryByDishes(items: Dish[], dishes: [{id: number, quantity: number}] )
     {
-        items.forEach( async (acc) => {
+        items.forEach( async (acc, index) => {
             const id = acc.InventoryItem;
             await Inventory.createQueryBuilder()
             .update(Inventory)
-            .set({amount: () => `amount + ${acc.InventoryFactor}`})
+            .set({amount: () => `amount + ${acc.InventoryFactor * dishes[index].quantity}`})
             .where("id = :id",{id})
             .execute();
         });

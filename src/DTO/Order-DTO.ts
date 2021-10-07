@@ -5,11 +5,11 @@ export class OrderDTO
     @IsNumber()
     id: number;
 
-    dishes: [number];
+    dishes: [{id: number,quantity: number}];
 
     userid: number;
 
-    dishestoremove: [number];
+    dishestoremove: [{id: number,quantity: number}];
 
     @IsNumber()
     TableNumber: number;
