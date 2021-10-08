@@ -20,8 +20,9 @@ export class AuthController
     @UseGuards(new LocalAuthGuard(UserDTO))
     async LogIn(@Body() userDTO: UserDTO, @Req() req)
     {
-        await this.authService.LogIn(userDTO);
-        return 'LOGGGED IN '+req.user.username.toUpperCase()
+        // await this.authService.LogIn(userDTO);
+        // return 'LOGGGED IN '+req.user.username.toUpperCase()
+        return await this.authService.LogIn(userDTO);
     }
 
     @Get('/check')
