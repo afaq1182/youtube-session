@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer";
 import { IsNotEmpty, IsString } from "class-validator";
 
 export class UserDTO
@@ -8,5 +9,6 @@ export class UserDTO
 
     @IsString()
     @IsNotEmpty()
+    @Exclude()
     password: string;
 }
