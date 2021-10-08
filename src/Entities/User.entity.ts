@@ -1,4 +1,4 @@
-import { Exclude } from "class-transformer";
+import { Exclude, Expose } from "class-transformer";
 import { BaseEntity, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Order } from "./Order.entity";
 
@@ -16,7 +16,7 @@ export class Users extends BaseEntity
     orders: Order;
 
     @Column()
-    @Exclude()
+    @Expose({groups: ['user.isAdmin']})
     password: string
 
     @Column({type: 'tinyint'})
