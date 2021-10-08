@@ -25,6 +25,7 @@ async function bootstrap() {
     cookie: {maxAge: 3600000}
     })
   );
+  app.enableCors();
   app.use(passport.initialize());
   app.use(passport.session());
   await app.listen(port);
