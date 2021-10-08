@@ -15,6 +15,7 @@ export class DishRepository extends Repository<Dish>
         dish.name = dishDTO.name;
         dish.price = dishDTO.price;
         dish.InventoryFactor = dishDTO.InventoryFactor;
+        dish.InventoryItem = dishDTO.InventoryItem;
         return await dish.save();
     }
 
@@ -42,6 +43,7 @@ export class DishRepository extends Repository<Dish>
         dish.name = dishDTO.name;
         dish.price = dishDTO.price;
         dish.InventoryFactor = dishDTO.InventoryFactor;
+        dish.InventoryItem = dishDTO.InventoryItem;
         return await dish.save();
     }
 

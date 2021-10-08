@@ -5,4 +5,5 @@ export class DishDTO {
     name: string;
     price: number;
     InventoryFactor: number;
+    InventoryItem: number;
 }
