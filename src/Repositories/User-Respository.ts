@@ -16,8 +16,8 @@ export class UserRepository extends Repository<Users>
             if( await bcrypt.compare(password,user.password))
             {
                 delete user.password;
-                delete user.isAdmin;
-                delete user.isStaff;
+                // delete user.isAdmin;
+                // delete user.isStaff;
                 console.log(user)
                 return user;
             }
