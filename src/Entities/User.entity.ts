@@ -1,4 +1,3 @@
-import { Exclude } from "class-transformer";
 import { BaseEntity, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Order } from "./Order.entity";
 
@@ -16,7 +15,6 @@ export class Users extends BaseEntity
     orders: Order;
 
     @Column()
-    @Exclude()
     password: string
 
     @Column({type: 'tinyint'})
