@@ -9,6 +9,5 @@ export class UserDTO
 
     @IsString()
     @IsNotEmpty()
-    @Exclude()
     password: string;
 }
