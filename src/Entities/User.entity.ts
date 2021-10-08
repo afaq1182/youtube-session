@@ -20,9 +20,11 @@ export class Users extends BaseEntity
     password: string
 
     @Column({type: 'tinyint'})
+    @Exclude()
     isAdmin: boolean
 
     @Column({type: 'tinyint'})
+    @Exclude()
     isStaff: boolean
 
 
