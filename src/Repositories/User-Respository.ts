@@ -10,7 +10,7 @@ export class UserRepository extends Repository<Users>
 {
     async LogIn(userDTO: UserDTO)
     {
-        var {username, password} = userDTO;
+        var {username, password} = userDTO; 
         const user = await Users.findOne({where: {username}})
         if(user) 
         {
