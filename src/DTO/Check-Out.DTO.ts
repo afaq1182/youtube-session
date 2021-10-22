@@ -9,7 +9,7 @@ export class CheckOutDTO
     @IsNumberString()
     BillPayed: number;
 
-    @IsNumberString()
+    @IsNumber()
     discount: number;
 
     @IsNumber()

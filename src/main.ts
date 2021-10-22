@@ -4,7 +4,7 @@ import * as session from 'express-session';
 import * as passport from 'passport';
 //import * as SqliteStore from 'better-sqlite3-session-store';
 import * as sqlite from 'better-sqlite3';
-const SqliteStore = require('better-sqlite3-session-store')(session)
+const SqliteStore = require('better-sqlite3-session-store')(session);
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

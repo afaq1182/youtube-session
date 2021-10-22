@@ -16,6 +16,10 @@ export class OrderService {
     {
         return await this.orderRepository.CheckOut(checkOutDTO);
     }
+    async ViewActiveOrders()
+    {
+        return await this.orderRepository.ViewActiveOrders();
+    }
     async GetAllOrders(orderDTO: OrderDTO)
     {
         return await this.orderRepository.GetAllOrders(orderDTO);

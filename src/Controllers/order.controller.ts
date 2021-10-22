@@ -23,6 +23,11 @@ export class OrderController {
         return await this.orderService.CheckOut(checkOutDTO);
     }
 
+    @Get('/viewactiveorders')
+    async ViewActiveOrders()
+    {
+        return await this.orderService.ViewActiveOrders();
+    }
     @Post('/GetOrders')
     async GetAllOrders(@Body() orderDTO: OrderDTO)
     {

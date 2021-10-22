@@ -16,7 +16,7 @@ export class Users extends BaseEntity
     orders: Order;
 
     @Column()
-    @Expose({groups: ['user.isAdmin']})
+    @Exclude()
     password: string
 
     @Column({type: 'tinyint'})
@@ -26,6 +26,4 @@ export class Users extends BaseEntity
     @Column({type: 'tinyint'})
     @Exclude()
     isStaff: boolean
-
-
 }

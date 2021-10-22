@@ -75,14 +75,21 @@ export class OrderRepository extends Repository<Order> {
     const now = moment().format('YYYY-MM-DD hh-mm-ss');
     console.log('Now Time' + now);
     console.log(CreatedAt.toString() < now);
-    const result = await Order.findAndCount({
-      where: { CreatedAt: LessThanOrEqual(now) } && {
-        CreatedAt: MoreThanOrEqual(CreatedAt),
-      },
-    });
-    //const result = await Order.createQueryBuilder('order').where({CreatedAt: LessThanOrEqual(`${now}`)}).andWhere({CreatedAt: MoreThanOrEqual(`${CreatedAt}`)}).getManyAndCount()
+    // const result = await Order.findAndCount({
+    //   where: { CreatedAt: LessThanOrEqual(now) } && {
+    //     CreatedAt: MoreThanOrEqual(CreatedAt),
+    //   },
+    // });
+    const result = await Order.createQueryBuilder('order').where({CreatedAt: LessThanOrEqual(`${now}`)}).andWhere({CreatedAt: MoreThanOrEqual(`${CreatedAt}`)}).getManyAndCount()
     console.log(result);
     const response = { OrdersCount: result[1], Orders: result[0] };
+    return response;
+  }
+
+  async ViewActiveOrders()
+  {
+    const result =  await Order.findAndCount({where: {CheckedOut: false}});
+    const response = {ActiveNumber: result[1], orders: result[0]};
     return response;
   }
 

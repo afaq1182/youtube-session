@@ -1,4 +1,4 @@
-import { Body, ClassSerializerInterceptor, Controller, Get, Post, Req, Res, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Get, HttpCode, HttpStatus, Post, Req, Res, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthenticatedGuard } from 'src/Guards/authenticated.guard';
 import { LocalAuthGuard } from 'src/Guards/local-auth.guard';
@@ -19,10 +19,11 @@ export class AuthController
 
     @Post('/signin')
     @UseGuards(new LocalAuthGuard(UserDTO))
-    async LogIn(@Body() userDTO: UserDTO, @Req() req)
+    async LogIn(@Body() userDTO: UserDTO, @Req() req, @Res() res)
     {
         // await this.authService.LogIn(userDTO);
         // return 'LOGGGED IN '+req.user.username.toUpperCase()
+        //res.status(HttpStatus.OK).send( await this.authService.LogIn(userDTO));
         return await this.authService.LogIn(userDTO);
     }
 

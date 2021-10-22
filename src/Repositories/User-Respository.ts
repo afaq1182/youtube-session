@@ -3,6 +3,7 @@ import { UserDTO } from "src/DTO/User-DTO";
 import { Users } from "src/Entities/User.entity";
 import { EntityRepository, Repository } from "typeorm";
 import * as bcrypt from "bcrypt"
+import { response } from "express";
 
 @EntityRepository(Users)
 export class UserRepository extends Repository<Users>
@@ -18,7 +19,7 @@ export class UserRepository extends Repository<Users>
                 //delete user.password;
                 // delete user.isAdmin;
                 // delete user.isStaff;
-                console.log(user)
+                console.log(user);
                 return user;
             }
             throw new UnauthorizedException('Wrong Credentials...!!!');
