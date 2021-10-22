@@ -7,7 +7,7 @@ import { response } from "express";
 
 @EntityRepository(Users)
 export class UserRepository extends Repository<Users>
-{
+{ 
     async LogIn(userDTO: UserDTO)
     {
         var {username, password} = userDTO; 
