@@ -1,4 +1,6 @@
+import { Transform } from "class-transformer";
 import { IsNumber } from "class-validator";
+import * as moment from "moment";
 
 export class OrderDTO
 {
@@ -29,6 +31,8 @@ export class OrderDTO
     @IsNumber()
     service_charges: number;
 
+    @Transform(date1 => moment(date1.value).format('DD-MM-yyyy hh:mm:ss A'))
     CreatedAt: string;
+
     CheckOutAt: Date;
 }

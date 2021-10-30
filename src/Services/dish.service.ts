@@ -19,6 +19,10 @@ export class DishService {
     async UpdateDish(dishDTO: DishDTO) {
         return await this.dishRepository.UpdateDish(dishDTO);
     }
+    async UpdateDishImage(id: number, path: string)
+    {
+        return await this.dishRepository.UpdateDishImage(id,path);
+    }
     async DeleteDish(id: number) {
         return await this.dishRepository.DeleteDish(id);
     }

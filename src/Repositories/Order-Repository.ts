@@ -27,7 +27,7 @@ export class OrderRepository extends Repository<Order> {
       return acc + item.price * dishes[index].quantity;
     }, 0);
     order.Bill = TotalPrice;
-    order.CreatedAt = await this.Getcurrenttime();
+    //order.CreatedAt = moment().format("DD-MM-YYYY hh:mm:ss A");
     order.CheckedOut = false;
     order.TableNumber = TableNumber;
     const user = new Users();
@@ -46,14 +46,14 @@ export class OrderRepository extends Repository<Order> {
     return { response };
   }
   async CheckOut(checkOutDTO: CheckOutDTO) {
-    const { BillId, BillPayed, custom_charges, service_charges } = checkOutDTO;
+    const { BillId, BillPayed, custom_charges, service_charges, discount } = checkOutDTO;
     const order = await Order.createQueryBuilder('order')
       .where({ id: BillId })
       .getOneOrFail();
     order.CheckedOut = true;
     order.CheckedOutAt = moment().format('YYYY-MM-DD hh-mm-ss');
     order.Bill_Payed = BillPayed;
-    order.discount = order.Bill - BillPayed;
+    order.discount = discount;
     order.custom_charges = custom_charges;
     order.service_charges = service_charges;
     order.Bill += custom_charges + service_charges;
@@ -61,28 +61,30 @@ export class OrderRepository extends Repository<Order> {
     const response = {
       OrderId: BillId,
       Bill: order.Bill,
-      BillPayed: BillPayed,
-      Discount: order.Bill - BillPayed,
+      BillPayed: BillPayed-discount,
+      Discount: discount,
     };
     return response;
   }
 
-  async GetAllOrders(orderDTO: OrderDTO) {
+  async GetAllOrders(orderDTO: OrderDTO)
+   {
     var { CreatedAt } = orderDTO;
-    if (!CreatedAt)
-      CreatedAt = moment().startOf('day').format('YYYY-MM-DD HH-mm-ss');
+    //CreatedAt = moment(CreatedAt).format('DD-MM-YYYY hh-mm-ss A');
+    console.log(CreatedAt);
+    if (!CreatedAt){ CreatedAt = moment().startOf('day').format('YYYY-MM-DD HH-mm-ss');}
     console.log('Created AT : ' + CreatedAt);
-    const now = moment().format('YYYY-MM-DD hh-mm-ss');
-    console.log('Now Time' + now);
+    const now = moment().format('DD-MM-YYYY hh-mm-ss A');
+    console.log('Now Time : ' + now);
     console.log(CreatedAt.toString() < now);
-    // const result = await Order.findAndCount({
-    //   where: { CreatedAt: LessThanOrEqual(now) } && {
-    //     CreatedAt: MoreThanOrEqual(CreatedAt),
-    //   },
-    // });
-    const result = await Order.createQueryBuilder('order').where({CreatedAt: LessThanOrEqual(`${now}`)}).andWhere({CreatedAt: MoreThanOrEqual(`${CreatedAt}`)}).getManyAndCount()
-    console.log(result);
-    const response = { OrdersCount: result[1], Orders: result[0] };
+    const result = await Order.findAndCount({
+      where: { CreatedAt: LessThanOrEqual(now) } && {
+        CreatedAt: MoreThanOrEqual(CreatedAt),
+      },
+    });
+    //const result = await Order.createQueryBuilder('order').where({CreatedAt: LessThanOrEqual(`${now}`)}).andWhere({CreatedAt: MoreThanOrEqual(`${CreatedAt}`)}).getManyAndCount()
+    //console.log(result);
+    const response = {DateEntered: CreatedAt, OrdersCount: result[1], Orders: result[0] };
     return response;
   }
 

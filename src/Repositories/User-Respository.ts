@@ -19,7 +19,6 @@ export class UserRepository extends Repository<Users>
                 //delete user.password;
                 // delete user.isAdmin;
                 // delete user.isStaff;
-                console.log(user);
                 return user;
             }
             throw new UnauthorizedException('Wrong Credentials...!!!');

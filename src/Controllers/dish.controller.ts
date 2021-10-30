@@ -1,5 +1,9 @@
-import { Controller, UseGuards, Post, Body, Get, Param, UsePipes, ParseIntPipe, Delete, Patch, Res } from '@nestjs/common';
+import { Controller, UseGuards, Post, Body, Get, Param, UsePipes, ParseIntPipe, Delete, Patch, Res, UseInterceptors, UploadedFile, Req } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ReadStream } from 'fs';
+import { diskStorage } from 'multer';
 import { DishDTO } from 'src/DTO/Dish-DTO';
+import { Helper } from 'src/extras/helper';
 import { DishNameValidationPipe } from 'src/Pipes/Dish-Validation.pipe';
 import { DishAlreadyExists } from 'src/Pipes/DishAlreadyExists.pipe';
 import { AuthenticatedGuard } from '../Guards/authenticated.guard';
@@ -44,6 +48,20 @@ export class DishController {
     async DeleteDish(@Param('id', ParseIntPipe) id: number) 
     {
         return await this.dishService.DeleteDish(id);
+    }
+
+    @Post('/upload')
+    @UseInterceptors(FileInterceptor('file',
+    {storage: diskStorage({
+    destination: "C:\\Users\\afaq\\Documents\\youtube-session\\dist\\modulesuploads",
+    filename: Helper.customFileName})}))
+    async FileUpload(@UploadedFile() file: Express.Multer.File ,@Res() res, @Req() req, @Req() dishid: number)
+    {   
+        console.log(req.body.dishid);
+        res.sendFile(file.path);
+        var paths = file.path;
+        return await this.dishService.UpdateDishImage(req.body.dishid,paths);
+        
     }
 
     @Get('/image/:id')

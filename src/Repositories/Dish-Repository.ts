@@ -48,6 +48,14 @@ export class DishRepository extends Repository<Dish>
         return await dish.save();
     }
 
+    async UpdateDishImage(id: number, path: string)
+    {
+        var dish = await Dish.findOneOrFail(id);
+        console.log(path)
+        dish.ImagePath = path;
+        return await dish.save();
+    }
+
     async DeleteDish(id: number) {
         try{
             return await Dish.delete(id);
@@ -62,6 +70,6 @@ export class DishRepository extends Repository<Dish>
     {
         const result =  await Dish.findOneOrFail({where: {id}});
         console.log(result);
-        return createReadStream(join(process.cwd()+result.ImagePath));
+        return createReadStream(result.ImagePath);
     }
 }

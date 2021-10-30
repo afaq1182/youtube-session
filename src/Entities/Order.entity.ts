@@ -1,4 +1,5 @@
-import { Exclude } from "class-transformer";
+import { Exclude, Transform } from "class-transformer";
+import * as moment from "moment";
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import { OrderDetails } from "./Order-Detail.entity";
 import { Users } from "./User.entity";
@@ -38,9 +39,10 @@ export class Order extends BaseEntity
     @Column({type: 'boolean', default: false})
     CheckedOut: boolean
 
+    @Transform((date1) => moment(date1.value).format('DD-MM-yyyy hh:mm:ss A'))
     @Column({type: "timestamp"})
-    CreatedAt: string
+    CreatedAt: string;
 
-    @Column({type: "timestamp", default: "2021-01-01"})
+    @Column({type: "timestamp", nullable: true})
     CheckedOutAt: string
 }
