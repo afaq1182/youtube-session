@@ -40,9 +40,10 @@ export class AuthController
     {
         req.session.destroy(function(err)
         {
-            res.send('You are logged OUT..!!!!');
-            res.clearCookie(this.cookie, { path: '/' });
-            res.clearCookie('connect.sid');
+            //res.clearCookie(this.cookie, { path: '/' });
+            //res.clearCookie('connect.sid');
+            const response = { response: 'You Have Been Logged Out..!!'};
+            res.send(response);
         })
     }
 }
