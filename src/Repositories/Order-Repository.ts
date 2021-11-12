@@ -12,6 +12,7 @@ import * as moment from 'moment';
 import { CheckOutDTO } from 'src/DTO/Check-Out.DTO';
 import { Users } from 'src/Entities/User.entity';
 import { InventoryRepository } from './Inventory-Repository';
+import { isMainThread } from 'worker_threads';
 
 @EntityRepository(Order)
 export class OrderRepository extends Repository<Order> {
@@ -21,7 +22,6 @@ export class OrderRepository extends Repository<Order> {
   async CreateOrder(orderDTO: OrderDTO) {
     const { dishes, TableNumber, userid } = orderDTO;   const order = new Order();  var TotalPrice = 0;
     const Dishes = await Dish.findByIds(dishes);
-
     await this.inventoryRepository.UpdateInventoryByDishes(Dishes, dishes);
     TotalPrice = Dishes.reduce((acc, item, index) => {
       return acc + item.price * dishes[index].quantity;

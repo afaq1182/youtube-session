@@ -8,7 +8,7 @@ import { MulterModule } from '@nestjs/platform-express';
   imports: [TypeOrmModule.forFeature([DishRepository]),
   MulterModule.register(
     {dest: __dirname+'uploads',
-    limits: {fileSize: 2000000}}
+    limits: {fileSize: 5000000}}
     )],
   controllers: [DishController],
   providers: [DishService]

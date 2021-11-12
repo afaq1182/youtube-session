@@ -15,7 +15,7 @@ export class DishRepository extends Repository<Dish>
         dish.name = dishDTO.name;
         dish.price = dishDTO.price;
         dish.InventoryFactor = dishDTO.InventoryFactor;
-        //dish.inventory = dishDTO.InventoryItem;
+        dish.ImagePath = dishDTO.imagepath;
         dish.InventoryItem = dishDTO.InventoryItem;
         return await dish.save();
     }

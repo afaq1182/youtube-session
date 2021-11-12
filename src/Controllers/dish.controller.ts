@@ -16,10 +16,16 @@ export class DishController {
     constructor(private dishService: DishService) { }
 
     @UseGuards(new IsAdmin())
+    @UseInterceptors(FileInterceptor('image',
+    {storage: diskStorage({
+    destination: Helper.destinationPath,
+    filename: Helper.customFileName})}))
     @Post('/createdish')
     @UsePipes(DishAlreadyExists)
-    async CreateDish(@Body() dishDTO: DishDTO) 
+    async CreateDish(@Body() dishDTO: DishDTO,@UploadedFile() file: Express.Multer.File) 
     {
+        console.log(file)
+        dishDTO.imagepath = file.path;
         return await this.dishService.CreateDish(dishDTO);
     }
 
@@ -53,7 +59,7 @@ export class DishController {
     @Post('/upload')
     @UseInterceptors(FileInterceptor('file',
     {storage: diskStorage({
-    destination: "C:\\Users\\afaq\\Documents\\youtube-session\\dist\\modulesuploads",
+    destination: Helper.destinationPath,
     filename: Helper.customFileName})}))
     async FileUpload(@UploadedFile() file: Express.Multer.File ,@Res() res, @Req() req, @Req() dishid: number)
     {   

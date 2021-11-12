@@ -6,4 +6,5 @@ export class DishDTO {
     price: number;
     InventoryFactor: number;
     InventoryItem: number;
+    imagepath: string;
 }
