@@ -22,6 +22,6 @@ export class Helper {
       }
     
     static destinationPath(req, file, cb) {
-      cb(null, "C:\\Users\\afaq\\Documents\\youtube-session\\dist\\modulesuploads")
+      cb(null, "C:\\Users\\afaq\\Documents\\youtube-session\\dist\\moduleuploads")
     }
   }
