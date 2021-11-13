@@ -1,4 +1,3 @@
-import { type } from "os";
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, Double, Unique, ManyToOne, JoinColumn } from "typeorm";
 import { Inventory } from "./Inventory.entity";
 

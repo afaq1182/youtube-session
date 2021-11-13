@@ -62,7 +62,6 @@ export class InventoryRepository extends Repository<Inventory>
             .execute();
         });
     }
-
     async FindInventory(id: number)
     {
         try

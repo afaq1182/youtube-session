@@ -6,7 +6,7 @@ import { Expense } from "src/Entities/Expense.entity";
 import { EntityRepository, MoreThanOrEqual, Repository } from "typeorm";
 
 @EntityRepository(Expense)
-export class ExpenseRepository extends Repository<Expense>
+export class ExpenseRepository extends Repository<[Expense,ExpenseType]>
 {
     async CreateExpense(expenseDTO: ExpenseDTO)
     {
@@ -64,7 +64,7 @@ export class ExpenseRepository extends Repository<Expense>
         }
     }
 
-    async FindExpenseType(expensetype: string)
+    async FindExpenseType(expensetype)
     {
         try
         {

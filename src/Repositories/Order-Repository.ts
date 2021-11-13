@@ -62,7 +62,7 @@ export class OrderRepository extends Repository<Order> {
       OrderId: BillId,
       Bill: order.Bill,
       BillPayed: BillPayed-discount,
-      Discount: discount,
+      Discount: discount
     };
     return response;
   }

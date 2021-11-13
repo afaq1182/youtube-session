@@ -1,4 +1,5 @@
 import {TypeOrmModuleOptions} from '@nestjs/typeorm'
+import { join } from 'path'
 
 export const typeormConfig : TypeOrmModuleOptions = 
 {
@@ -8,9 +9,11 @@ export const typeormConfig : TypeOrmModuleOptions =
     username: 'root',
     password: '',
     database: "mangal_oriental",
-    entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+    //entities: [join(__dirname + '/../**/*.entity{.ts,.js}')],
+    entities: [join(__dirname + 'dist/**/*.entity{.ts,.js}')],
     autoLoadEntities: true,
     retryAttempts: 3,
     dateStrings: true,
-    synchronize: true
+    synchronize: true,
+    keepConnectionAlive: true
 }

@@ -8,6 +8,7 @@ export class ExpenseValidationPipe implements PipeTransform
 {   constructor(@InjectRepository(ExpenseRepository) private expenseRepository: ExpenseRepository){}
     async transform(value: ExpenseDTO)
     {
+        console.log(value.category)
         if(value.category) value.category = value.category.toUpperCase();
         const getCategories = await this.expenseRepository.FindExpenseType(value.category);
         value.categoryid = getCategories.id;

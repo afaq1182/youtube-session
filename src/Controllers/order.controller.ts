@@ -1,12 +1,13 @@
-import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Patch, Post, Req, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Patch, Post, Req, Res, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthenticatedGuard } from 'src/Guards/authenticated.guard';
 import { CheckOutDTO } from 'src/DTO/Check-Out.DTO';
 import { OrderDTO } from 'src/DTO/Order-DTO';
 import { OrderService } from 'src/Services/order.service';
+import { ApiAcceptedResponse, ApiResponse } from '@nestjs/swagger';
 
 @Controller('order')
 @UseGuards(AuthenticatedGuard)
-@UseInterceptors(ClassSerializerInterceptor)
+//@UseInterceptors(ClassSerializerInterceptor)
 export class OrderController {
     constructor(private orderService: OrderService){}
 
@@ -14,6 +15,7 @@ export class OrderController {
     async CreateOrder(@Body() orderDTO: OrderDTO, @Req() req)
     {
         orderDTO.userid = req.user.id;
+       //res.send('Hot Reload Working')
         return await this.orderService.CreateOrder(orderDTO);
     }
 
