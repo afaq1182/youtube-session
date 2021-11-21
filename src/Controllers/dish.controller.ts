@@ -76,4 +76,5 @@ export class DishController {
         const file : any = await this.dishService.GetImage(id);
         return file.pipe(res);
     }
+
 }

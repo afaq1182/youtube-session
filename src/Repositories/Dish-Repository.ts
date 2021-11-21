@@ -78,4 +78,5 @@ export class DishRepository extends Repository<Dish>
             throw new NotFoundException();
         }
     }
+
 }

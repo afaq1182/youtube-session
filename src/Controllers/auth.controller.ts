@@ -17,6 +17,7 @@ export class AuthController
         return await this.authService.createUser(userDto);
     }
 
+    @HttpCode(200)
     @Post('/signin')
     @UseGuards(new LocalAuthGuard(UserDTO))
     async LogIn(@Body() userDTO: UserDTO, @Req() req)

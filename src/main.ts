@@ -8,11 +8,13 @@ import * as sqlite from 'better-sqlite3';
 import csurf from 'csurf'
 import { ClassSerializerInterceptor } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as helmet from 'helmet';
 const SqliteStore = require('better-sqlite3-session-store')(session);
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+  //Don't use interceptors on global level because images wont be able to stream at all
+  //app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   if (module.hot) {
     module.hot.accept();
     module.hot.dispose(() => app.close());
@@ -45,6 +47,7 @@ SwaggerModule.setup('api', app, document);
   app.enableCors();
   app.use(passport.initialize());
   app.use(passport.session());
+  app.use(helmet());
   ///app.use(csurf({cookie: true});
   await app.listen(port);
   

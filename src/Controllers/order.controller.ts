@@ -1,9 +1,8 @@
-import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Patch, Post, Req, Res, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Delete, Get, HttpCode, Patch, Post, Req, Res, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthenticatedGuard } from 'src/Guards/authenticated.guard';
 import { CheckOutDTO } from 'src/DTO/Check-Out.DTO';
 import { OrderDTO } from 'src/DTO/Order-DTO';
 import { OrderService } from 'src/Services/order.service';
-import { ApiAcceptedResponse, ApiResponse } from '@nestjs/swagger';
 
 @Controller('order')
 @UseGuards(AuthenticatedGuard)
@@ -27,6 +26,7 @@ export class OrderController {
     }
 
     @Get('/viewactiveorders')
+    
     async ViewActiveOrders()
     {
         return await this.orderService.ViewActiveOrders();

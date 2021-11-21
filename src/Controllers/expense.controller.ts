@@ -1,4 +1,4 @@
-import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Req, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common';
 import { AuthenticatedGuard } from 'src/Guards/authenticated.guard';
 import { ExpenseDTO } from 'src/DTO/Expense-DTO';
 import { ExpenseValidationPipe } from 'src/Pipes/Expense-Validation.pipe';
@@ -7,7 +7,7 @@ import { IsAdmin } from 'src/Guards/isAdmin.guard';
 
 @Controller('expense')
 @UseGuards(AuthenticatedGuard)
-///@UseInterceptors(ClassSerializerInterceptor)
+@UseInterceptors(ClassSerializerInterceptor)
 export class ExpenseController {
     constructor(private expenseService: ExpenseService){}
 
@@ -26,7 +26,7 @@ export class ExpenseController {
     }
 
     @Get('/viewbydate')
-    async ViewAllExpenses(@Body() expenseDTO: ExpenseDTO)
+    async ViewAllExpenses(@Body() expenseDTO: ExpenseDTO, @Req() req)
     {
         return await this.expenseService.ViewAllExpenses(expenseDTO);
     }
