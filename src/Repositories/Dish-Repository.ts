@@ -70,8 +70,9 @@ export class DishRepository extends Repository<Dish>
     {
         try{
         const result =  await Dish.findOneOrFail({where: {id}});
-        console.log(result);
-        return createReadStream(result.ImagePath);
+        console.log(result.ImagePath);
+        //return createReadStream(result.ImagePath);
+        return result.ImagePath;
         }
         catch(err)
         {

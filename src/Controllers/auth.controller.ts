@@ -20,12 +20,16 @@ export class AuthController
     @HttpCode(200)
     @Post('/signin')
     @UseGuards(new LocalAuthGuard(UserDTO))
-    async LogIn(@Body() userDTO: UserDTO, @Req() req)
+    async LogIn(@Body() userDTO: UserDTO, @Req() req, @Res() res)
     {
-        // await this.authService.LogIn(userDTO);
-        // return 'LOGGGED IN '+req.user.username.toUpperCase()
-        //res.status(HttpStatus.OK).send( await this.authService.LogIn(userDTO));
-        return await this.authService.LogIn(userDTO);
+        const resp =  await this.authService.LogIn(userDTO);
+        console.log(resp);
+        res.send("Logged");
+        //return 'LOGGGED IN '+req.user.username.toUpperCase()
+       // res.status(HttpStatus.OK).send( await this.authService.LogIn(userDTO));
+       //return await this.authService.LogIn(userDTO);
+      // return {pak:"istan"};
+      //res.send(result)
     }
 
     @Get('/check')

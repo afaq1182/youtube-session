@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Post, Body, Get, Param, UsePipes, ParseIntPipe, Delete, Patch, Res, UseInterceptors, UploadedFile, Req } from '@nestjs/common';
+import { Controller, UseGuards, Post, Body, Get, Param, UsePipes, ParseIntPipe, Delete, Patch, Res, UseInterceptors, UploadedFile, Req, ClassSerializerInterceptor } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ReadStream } from 'fs';
 import { diskStorage } from 'multer';
@@ -12,6 +12,7 @@ import { DishService } from '../Services/dish.service';
 
 @Controller('dish')
 @UseGuards(new AuthenticatedGuard())
+@UseInterceptors(ClassSerializerInterceptor)
 export class DishController {
     constructor(private dishService: DishService) { }
 
@@ -74,7 +75,9 @@ export class DishController {
     async GetImage(@Res() res,@Param('id', ParseIntPipe) id: number)
     {
         const file : any = await this.dishService.GetImage(id);
-        return file.pipe(res);
+        console.log(file);
+        res.sendFile(file);
+        //return file.pipe(res);
     }
 
 }

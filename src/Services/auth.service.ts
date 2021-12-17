@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserDTO } from 'src/DTO/User-DTO';
-import { UserRepository } from 'src/Repositories/User-Respository';
+import { UserRepository } from 'src/Repositories/Auth-Respository';
 import { UsersService } from 'src/Services/users.service';
 
 @Injectable()

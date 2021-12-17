@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserRepository } from 'src/Repositories/User-Respository';
+import { UserRepository } from 'src/Repositories/Auth-Respository';
 import { UsersService } from '../Services/users.service';
 
 @Module({

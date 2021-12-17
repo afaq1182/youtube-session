@@ -6,9 +6,9 @@ declare const module: any;
 //import * as SqliteStore from 'better-sqlite3-session-store';
 import * as sqlite from 'better-sqlite3';
 import csurf from 'csurf'
-import { ClassSerializerInterceptor } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as helmet from 'helmet';
+
 const SqliteStore = require('better-sqlite3-session-store')(session);
 
 async function bootstrap() {
