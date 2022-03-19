@@ -17,8 +17,9 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 @Module({
   imports: [UsersModule, AuthModule,DishModule, TypeOrmModule.forRoot(typeormConfig),ServeStaticModule.forRoot({
     rootPath: join(__dirname),
-  }), OrderModule, InventoryModule, ExpenseModule, ThrottlerModule.forRoot({ ttl: 60, limit:400})],
+  })
+  , OrderModule, InventoryModule, ExpenseModule,],// ThrottlerModule.forRoot({ ttl: 60, limit:400})],
   controllers: [AppController],
-  providers: [AppService,]// {provide: APP_GUARD, useClass: ThrottlerGuard}, {provide: APP_INTERCEPTOR, useClass: ClassSerializerInterceptor}],
+  providers: [AppService,{provide: APP_INTERCEPTOR, useClass: ClassSerializerInterceptor}]// {provide: APP_GUARD, useClass: ThrottlerGuard}, {provide: APP_INTERCEPTOR, useClass: ClassSerializerInterceptor}],
 })
 export class AppModule {}

@@ -18,7 +18,7 @@ export class InventoryRepository extends Repository<Inventory>
         return await inventory.save();
     }
 
-    async ViewItem(id: number)
+    async ViewItem(id: number) 
     {
         return await this.FindInventory(id);
     }

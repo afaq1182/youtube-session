@@ -11,7 +11,7 @@ export class Helper {
       else if(file.mimetype.indexOf("png") > -1){
           fileExtension = "png";
           const originalName = file.originalname.split(".")[0];
-      cb(null, originalName + '-' + uniqueSuffix+"."+fileExtension);
+      cb(null, originalName + '-'+ uniqueSuffix+"."+fileExtension);
       }
       else
       {

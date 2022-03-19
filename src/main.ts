@@ -3,11 +3,7 @@ import { AppModule } from './app.module';
 import * as session from 'express-session';
 import * as passport from 'passport';
 declare const module: any;
-//import * as SqliteStore from 'better-sqlite3-session-store';
 import * as sqlite from 'better-sqlite3';
-import csurf from 'csurf'
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import * as helmet from 'helmet';
 
 const SqliteStore = require('better-sqlite3-session-store')(session);
 
@@ -19,14 +15,6 @@ async function bootstrap() {
     module.hot.accept();
     module.hot.dispose(() => app.close());
   }
-  const config = new DocumentBuilder()
-  .setTitle('Cats example')
-  .setDescription('The cats API description')
-  .setVersion('1.0')
-  .addTag('cats')
-  .build();
-const document = SwaggerModule.createDocument(app, config);
-SwaggerModule.setup('api', app, document);
   const port = process.env.PORT || 3000;
   const db = new sqlite("sessions.db", { });//verbose: console.log });
   app.use(
@@ -38,7 +26,7 @@ SwaggerModule.setup('api', app, document);
         intervalMs: 900000 //ms = 15min
       }
     }),
-    secret: 'afaq', 
+    secret: process.env.SECRET, 
     resave: false,
     saveUninitialized: false,
     cookie: {maxAge: 3600000}
@@ -47,8 +35,6 @@ SwaggerModule.setup('api', app, document);
   app.enableCors();
   app.use(passport.initialize());
   app.use(passport.session());
-  app.use(helmet());
-  ///app.use(csurf({cookie: true});
   await app.listen(port);
   
 }

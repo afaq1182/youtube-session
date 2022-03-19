@@ -11,6 +11,7 @@ export class AuthController
 {
     constructor(private authService: AuthService){}
 
+    @HttpCode(201)
     @Post('/signup')
     async createUser(@Body() userDto: UserDTO)
     {
@@ -20,11 +21,10 @@ export class AuthController
     @HttpCode(200)
     @Post('/signin')
     @UseGuards(new LocalAuthGuard(UserDTO))
-    async LogIn(@Body() userDTO: UserDTO, @Req() req, @Res() res)
+    async LogIn(@Body() userDTO: UserDTO, @Req() req)
     {
-        const resp =  await this.authService.LogIn(userDTO);
-        console.log(resp);
-        res.send("Logged");
+        return await this.authService.LogIn(userDTO);
+        
         //return 'LOGGGED IN '+req.user.username.toUpperCase()
        // res.status(HttpStatus.OK).send( await this.authService.LogIn(userDTO));
        //return await this.authService.LogIn(userDTO);

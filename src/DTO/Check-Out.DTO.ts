@@ -3,10 +3,10 @@ import { isInt, IsNumber,  IsNumberString } from "class-validator";
 
 export class CheckOutDTO
 {
-    @IsNumberString()
+    @IsNumber()
     BillId: number;
 
-    @IsNumberString()
+    @IsNumber()
     BillPayed: number;
 
     @IsNumber()

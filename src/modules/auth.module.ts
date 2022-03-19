@@ -5,7 +5,7 @@ import { AuthService } from '../Services/auth.service';
 import { LocalStrategy } from '../auth/local.strategy';
 import { SessionSerializer } from '../auth/session.serializer';
 import { AuthController } from '../Controllers/auth.controller';
-import { UserRepository } from 'src/Repositories/Auth-Respository';
+import { UserRepository } from 'src/Repositories/User-Respository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 

@@ -1,9 +1,7 @@
 import { EntityRepository, Repository } from "typeorm";
 import { Dish } from "../Entities/Dish.entity";
 import { DishDTO } from "../DTO/Dish-DTO";
-import { NotFoundException } from "@nestjs/common";
-import { createReadStream, fsync } from "fs";
-import { join } from "path";
+import { NotFoundException, StreamableFile } from "@nestjs/common";
 
 
 @EntityRepository(Dish)
@@ -21,7 +19,10 @@ export class DishRepository extends Repository<Dish>
     }
 
     async ViewAllDishes() {
-        const dishes = await Dish.findAndCount();
+        const dishes = await Dish.findAndCount({
+            skip: 1,
+            take: 5
+        });
         const response = {TotalDishes: dishes[1], Dishes: dishes[0]}
         return {response};
     }
@@ -31,14 +32,14 @@ export class DishRepository extends Repository<Dish>
     }
     async GetDishByName(name: string)
     {
-        return await Dish.findOne({where: {name}});   
+        return await Dish.findOne({where: {name}});    
     }
 
     async UpdateDish(dishDTO: DishDTO) 
     {
         console.log(dishDTO)
         const {id} = dishDTO;
-        const dish = await Dish.findOne({id})
+        const dish = await Dish.findOne({id});
         if(dish===undefined) throw new NotFoundException('No such dish exists..!!!');
         console.log(dishDTO);
         dish.name = dishDTO.name;
@@ -70,8 +71,8 @@ export class DishRepository extends Repository<Dish>
     {
         try{
         const result =  await Dish.findOneOrFail({where: {id}});
-        console.log(result.ImagePath);
-        //return createReadStream(result.ImagePath);
+        //console.log(result.ImagePath);
+       // return createReadStream(result.ImagePath);
         return result.ImagePath;
         }
         catch(err)

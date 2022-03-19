@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req, Request, Res, Session, UseGuards } from '@nestjs/common';
+import { Controller, Get, HttpCode, Post, Req, Request, Res, Session, UseGuards } from '@nestjs/common';
 import { AppService } from '../app.service';
 import { AuthenticatedGuard } from '../Guards/authenticated.guard';
 import { IsAdmin } from '../Guards/isAdmin.guard';
@@ -23,6 +23,7 @@ export class AppController {
     return `Hey ${req.user.name.toUpperCase()}...!!!`
   }
 
+  @HttpCode(200)
   @Get('/logout')
   @UseGuards(new AuthenticatedGuard)
   async logout(@Req() req, @Res() res)
